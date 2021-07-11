@@ -1,8 +1,8 @@
-import styled from "styled-components";
-import { darken } from "polished";
+import styled from 'styled-components'
+import { darken } from 'polished'
 
 interface ISidebar {
-  active: boolean;
+  active: boolean
 }
 
 export const Container = styled.div`
@@ -13,7 +13,7 @@ export const Container = styled.div`
   position: relative;
   overflow-y: auto;
   overflow-x: hidden;
-`;
+`
 
 export const Content = styled.div`
   width: 100%;
@@ -26,7 +26,7 @@ export const Content = styled.div`
   @media screen and (max-width: 700px) {
     display: block;
   }
-`;
+`
 
 export const Left = styled.div`
   width: 60%;
@@ -43,7 +43,7 @@ export const Left = styled.div`
   @media screen and (max-width: 700px) {
     width: 100%;
   }
-`;
+`
 
 export const Right = styled.div<ISidebar>`
   width: 40%;
@@ -54,7 +54,7 @@ export const Right = styled.div<ISidebar>`
   backdrop-filter: blur(10px);
   padding-left: 90px;
   position: absolute;
-  right: ${({ active }) => (active ? 0 : "-40vw")};
+  right: ${({ active }) => (active ? 0 : '-40vw')};
 
   @media screen and (max-width: 1000px) {
     width: 35%;
@@ -66,12 +66,12 @@ export const Right = styled.div<ISidebar>`
     background: #2e2e2e;
     max-width: 100%;
   }
-`;
+`
 
 export const FeelsLike = styled.p`
   color: #fff;
   font-size: 1.1rem;
-`;
+`
 
 export const WeatherInfo = styled.div`
   display: inline-flex;
@@ -81,7 +81,7 @@ export const WeatherInfo = styled.div`
   p {
     align-self: flex-end;
   }
-`;
+`
 
 export const Temperature = styled.p`
   font-size: 8rem;
@@ -92,7 +92,7 @@ export const Temperature = styled.p`
   @media screen and (max-width: 1000px) {
     font-size: 5rem;
   }
-`;
+`
 
 export const Info = styled.div`
   color: #fff;
@@ -121,7 +121,7 @@ export const Info = styled.div`
       font-size: 2rem;
     }
   }
-`;
+`
 
 // search form
 
@@ -129,7 +129,7 @@ export const SearchForm = styled.form`
   width: 100%;
   display: inline-flex;
   align-items: flex-end;
-`;
+`
 
 export const SearchInput = styled.input`
   color: #fff;
@@ -148,7 +148,7 @@ export const SearchInput = styled.input`
   @media screen and (max-width: 1000px) {
     width: 60%;
   }
-`;
+`
 
 export const SearchButton = styled.button`
   width: 150px;
@@ -160,7 +160,7 @@ export const SearchButton = styled.button`
 
   :hover {
     cursor: pointer;
-    background: ${darken(0.1, "#e06004")};
+    background: ${darken(0.1, '#e06004')};
   }
 
   @media screen and (max-width: 1000px) {
@@ -172,7 +172,7 @@ export const SearchButton = styled.button`
       height: 50%;
     }
   }
-`;
+`
 
 export const History = styled.div`
   width: calc(100% - 100px);
@@ -199,7 +199,7 @@ export const History = styled.div`
   @media screen and (max-width: 1000px) {
     width: calc(100% - 7%);
   }
-`;
+`
 
 export const WeatherDetails = styled.div`
   width: calc(100% - 100px);
@@ -235,7 +235,7 @@ export const WeatherDetails = styled.div`
   @media screen and (max-width: 1000px) {
     width: calc(100% - 7%);
   }
-`;
+`
 
 export const ToggleSidebar = styled.button<ISidebar>`
   width: 30px;
@@ -244,7 +244,7 @@ export const ToggleSidebar = styled.button<ISidebar>`
   background: orange;
   position: absolute;
   top: 0;
-  right: ${({ active }) => (active ? "40%" : "0")};
+  right: ${({ active }) => (active ? '40%' : '0')};
   cursor: pointer;
   z-index: 10;
   display: flex;
@@ -252,6 +252,6 @@ export const ToggleSidebar = styled.button<ISidebar>`
   align-items: center;
   img {
     transition: 1s;
-    transform: rotateY(${({ active }) => (active ? "180deg" : 0)});
+    transform: rotateY(${({ active }) => (active ? '180deg' : 0)});
   }
-`;
+`

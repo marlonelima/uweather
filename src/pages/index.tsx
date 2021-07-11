@@ -1,5 +1,5 @@
-import { ChangeEvent, useEffect, useState } from "react";
-import Image from "next/image";
+import { ChangeEvent, useEffect, useState } from 'react'
+import Image from 'next/image'
 
 import {
   Container,
@@ -14,36 +14,36 @@ import {
   History,
   WeatherDetails,
   FeelsLike,
-  ToggleSidebar,
-} from "../styles/pages/home";
+  ToggleSidebar
+} from '../styles/pages/home'
 
-import { Left } from "../styles/pages/home";
-import { BackgroundImage } from "../components/BackgroundImage";
+import { Left } from '../styles/pages/home'
+import { BackgroundImage } from '../components/BackgroundImage'
 
-import SearchIcon from "../assets/icons/search.svg";
-import ArrowIcon from "../assets/icons/arrow.svg";
+import SearchIcon from '../assets/icons/search.svg'
+import ArrowIcon from '../assets/icons/arrow.svg'
 
-import { WeatherService } from "../services/weather.service";
-import { dateToShow, round } from "./../utils/formatter";
-import { IWeather } from "./../@types/interfaces.d";
+import { WeatherService } from '../services/weather.service'
+import { dateToShow, round } from './../utils/formatter'
+import { IWeather } from './../@types/interfaces.d'
 
 export default function Home() {
-  const [actualWeather, setActualWeather] = useState({} as IWeather);
-  const [searchField, setSearchField] = useState("");
-  const [sidebarActive, setSidebarActive] = useState(true);
+  const [actualWeather, setActualWeather] = useState({} as IWeather)
+  const [searchField, setSearchField] = useState('')
+  const [sidebarActive, setSidebarActive] = useState(true)
 
-  useEffect(() => {}, []);
+  useEffect(() => {}, [])
 
   function handleInputChange(event: ChangeEvent<HTMLInputElement>) {
-    setSearchField(event.target.value);
+    setSearchField(event.target.value)
   }
 
   async function handleSubmit(event: ChangeEvent<HTMLFormElement>) {
-    event.preventDefault();
-    const weatherInfo = await WeatherService.getByCityName(searchField);
-    if (weatherInfo) return setActualWeather(weatherInfo);
+    event.preventDefault()
+    const weatherInfo = await WeatherService.getByCityName(searchField)
+    if (weatherInfo) return setActualWeather(weatherInfo)
 
-    return;
+    return
   }
 
   return (
@@ -72,7 +72,7 @@ export default function Home() {
                 </span>
                 <div>
                   <Image
-                    src={"https:" + actualWeather.current.condition.icon}
+                    src={'https:' + actualWeather.current.condition.icon}
                     alt="Weathr Icon"
                     layout="fill"
                   />
@@ -133,5 +133,5 @@ export default function Home() {
         </Right>
       </Content>
     </Container>
-  );
+  )
 }
