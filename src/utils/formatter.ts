@@ -1,11 +1,12 @@
 import { days, months } from './daysandmonths'
 import { formatToLocationTime } from './time'
+
 export function round(value: number) {
   return Math.round(value)
 }
 
-export function dateToShow(dateString: number) {
-  const date = formatToLocationTime(dateString)
+export function dateToShow(timeshift: number) {
+  const date = formatToLocationTime(timeshift)
 
   const day = days[date.getDay()]
   const month = months[date.getMonth()]
@@ -17,17 +18,10 @@ export function dateToShow(dateString: number) {
   return `${padStart(hours)}:${padStart(minutes)} - ${day}, ${month}, ${year} `
 }
 
-export function getHour(dateString: number) {
-  const date = new Date(dateString * 1000)
-  return date.getUTCHours()
-}
-
-export function normalizeCity(city: string) {
-  return city
-    .normalize('NFD')
-    .replace(/[\u0300-\u036f]/g, '')
-    .toLowerCase()
-    .replace(' ', '_')
+export function getHour(timeshift: number) {
+  const date = formatToLocationTime(timeshift)
+  console.log(date.getHours())
+  return date.getHours()
 }
 
 function padStart(number: number) {

@@ -20,8 +20,8 @@ import SearchIcon from '../assets/icons/search.svg'
 import ArrowIcon from '../assets/icons/arrow.svg'
 
 import { WeatherService } from '../services/weather.service'
-import { dateToShow, normalizeCity, round } from './../utils/formatter'
-import { INewWeather, IWeather } from './../@types/interfaces.d'
+import { round } from './../utils/formatter'
+import { INewWeather } from './../@types/interfaces.d'
 import { PositionService } from '../services/position.service'
 import { WeatherDisplay } from '../components/WeatherDisplay'
 
@@ -60,7 +60,7 @@ export default function Home() {
 
   return (
     <Container>
-      <BackgroundImage time={actualWeather.dt} />
+      <BackgroundImage time={actualWeather.timezone} />
 
       <Content>
         <ToggleSidebar
