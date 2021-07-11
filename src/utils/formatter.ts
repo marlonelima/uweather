@@ -22,3 +22,11 @@ export function getHour(dateString: string) {
 
   return date.getHours()
 }
+
+export function normalizeCity(city: string) {
+  return city
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase()
+    .replace(' ', '_')
+}

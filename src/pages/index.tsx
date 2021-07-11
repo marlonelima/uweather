@@ -5,15 +5,11 @@ import {
   Container,
   Content,
   Right,
-  Temperature,
-  WeatherInfo,
-  Info,
   SearchForm,
   SearchInput,
   SearchButton,
   History,
   WeatherDetails,
-  FeelsLike,
   ToggleSidebar
 } from '../styles/pages/home'
 
@@ -24,15 +20,31 @@ import SearchIcon from '../assets/icons/search.svg'
 import ArrowIcon from '../assets/icons/arrow.svg'
 
 import { WeatherService } from '../services/weather.service'
-import { dateToShow, round } from './../utils/formatter'
+import { dateToShow, normalizeCity, round } from './../utils/formatter'
 import { IWeather } from './../@types/interfaces.d'
+import { PositionService } from '../services/position.service'
+import { WeatherDisplay } from '../components/WeatherDisplay'
 
 export default function Home() {
   const [actualWeather, setActualWeather] = useState({} as IWeather)
   const [searchField, setSearchField] = useState('')
   const [sidebarActive, setSidebarActive] = useState(true)
 
-  useEffect(() => {}, [])
+  useEffect(() => {
+    getMyWeather()
+  }, [])
+
+  async function getMyWeather() {
+    const { city: myCity } = await PositionService.getMyCity()
+
+    if (!myCity) return
+
+    const myWeather = await WeatherService.getByCityName(normalizeCity(myCity))
+
+    if (!myWeather) return
+
+    return setActualWeather(myWeather)
+  }
 
   function handleInputChange(event: ChangeEvent<HTMLInputElement>) {
     setSearchField(event.target.value)
@@ -58,29 +70,9 @@ export default function Home() {
           <Image src={ArrowIcon} alt="Arrow" width={16} height={16} />
         </ToggleSidebar>
 
-        {actualWeather.location && (
-          <Left>
-            <FeelsLike>
-              Sensação térmica {round(actualWeather.current.feelslike_c)}°
-            </FeelsLike>
-            <WeatherInfo>
-              <Temperature>{round(actualWeather.current.temp_c)}°</Temperature>
-              <Info>
-                <span>
-                  <p className="city">{actualWeather.location.name}</p>
-                  <p>{dateToShow(actualWeather.location.localtime)}</p>
-                </span>
-                <div>
-                  <Image
-                    src={'https:' + actualWeather.current.condition.icon}
-                    alt="Weathr Icon"
-                    layout="fill"
-                  />
-                </div>
-              </Info>
-            </WeatherInfo>
-          </Left>
-        )}
+        <Left>
+          {actualWeather.location && <WeatherDisplay weather={actualWeather} />}
+        </Left>
 
         <Right active={sidebarActive}>
           <SearchForm onSubmit={handleSubmit}>
