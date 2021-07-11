@@ -1,5 +1,6 @@
 import { ChangeEvent, useEffect, useState } from 'react'
 import Image from 'next/image'
+import axios from 'axios'
 
 import {
   Container,
@@ -25,8 +26,31 @@ import { INewWeather } from './../@types/interfaces.d'
 import { PositionService } from '../services/position.service'
 import { WeatherDisplay } from '../components/WeatherDisplay'
 
-export default function Home() {
-  const [actualWeather, setActualWeather] = useState({} as INewWeather)
+export async function getStaticProps() {
+  const response = await axios.get(
+    'https://api.openweathermap.org/data/2.5/weather',
+    {
+      params: {
+        appid: process.env.WEATHER_API_KEY,
+        q: 'São Paulo, São Paulo',
+        lang: 'pt',
+        units: 'metric'
+      }
+    }
+  )
+
+  return {
+    props: { weather: response.data },
+    revalidate: 120
+  }
+}
+
+interface IProps {
+  weather: INewWeather
+}
+
+export default function Home({ weather }: IProps) {
+  const [actualWeather, setActualWeather] = useState(weather)
   const [searchField, setSearchField] = useState('')
   const [sidebarActive, setSidebarActive] = useState(true)
 
