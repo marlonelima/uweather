@@ -8,31 +8,29 @@ import {
 } from '../styles/components/weatherdisplay'
 
 import { dateToShow, round } from '../utils/formatter'
-import { IWeather } from '../@types/interfaces'
+import { INewWeather, IWeather } from '../@types/interfaces'
 
 interface IProps {
-  weather: IWeather
+  weather: INewWeather
 }
 
 export const WeatherDisplay = ({ weather }: IProps) => {
   return (
     <>
-      <FeelsLike>
-        Sensação térmica {round(weather.current.feelslike_c)}°
-      </FeelsLike>
+      <FeelsLike>Sensação térmica {round(weather.main.feels_like)}°</FeelsLike>
       <WeatherInfo>
-        <Temperature>{round(weather.current.temp_c)}°</Temperature>
+        <Temperature>{round(weather.main.temp)}°</Temperature>
         <Info>
           <span>
-            <p className="city">{weather.location.name}</p>
-            <p>{dateToShow(weather.location.localtime)}</p>
+            <p className="city">{weather.name}</p>
+            <p>{dateToShow(weather.timezone)}</p>
           </span>
           <div>
-            <Image
-              src={'https:' + weather.current.condition.icon}
+            {/* <Image
               alt="Weathr Icon"
+              src={'https:' + weather.current.condition.icon}
               layout="fill"
-            />
+            /> */}
           </div>
         </Info>
       </WeatherInfo>

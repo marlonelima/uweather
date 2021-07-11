@@ -3,21 +3,24 @@ import axios from 'axios'
 
 // prettier-ignore
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  const { city } = req.query
+  const { location } = req.query
 
   try {
     const response = await axios.get(
-      'http://api.weatherapi.com/v1/current.json',
+      'https://api.openweathermap.org/data/2.5/weather',
       {
         params: {
-          key: process.env.WEATHER_API_KEY,
-          q: city
+          appid: process.env.WEATHER_API_KEY,
+          q: location,
+          lang: 'pt',
+          units: 'metric'
         }
       }
     )
 
     res.status(200).json(response.data)
   } catch (err) {
+    console.log(err)
     res.status(400).json({ error: true })
   }
 }

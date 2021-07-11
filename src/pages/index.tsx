@@ -21,12 +21,12 @@ import ArrowIcon from '../assets/icons/arrow.svg'
 
 import { WeatherService } from '../services/weather.service'
 import { dateToShow, normalizeCity, round } from './../utils/formatter'
-import { IWeather } from './../@types/interfaces.d'
+import { INewWeather, IWeather } from './../@types/interfaces.d'
 import { PositionService } from '../services/position.service'
 import { WeatherDisplay } from '../components/WeatherDisplay'
 
 export default function Home() {
-  const [actualWeather, setActualWeather] = useState({} as IWeather)
+  const [actualWeather, setActualWeather] = useState({} as INewWeather)
   const [searchField, setSearchField] = useState('')
   const [sidebarActive, setSidebarActive] = useState(true)
 
@@ -35,11 +35,11 @@ export default function Home() {
   }, [])
 
   async function getMyWeather() {
-    const { city: myCity } = await PositionService.getMyCity()
+    const { city } = await PositionService.getMyCity()
 
-    if (!myCity) return
+    if (!city) return
 
-    const myWeather = await WeatherService.getByCityName(normalizeCity(myCity))
+    const myWeather = await WeatherService.getByCityName(city)
 
     if (!myWeather) return
 
@@ -60,7 +60,7 @@ export default function Home() {
 
   return (
     <Container>
-      <BackgroundImage time={actualWeather.location?.localtime} />
+      <BackgroundImage time={actualWeather.dt} />
 
       <Content>
         <ToggleSidebar
@@ -71,7 +71,7 @@ export default function Home() {
         </ToggleSidebar>
 
         <Left>
-          {actualWeather.location && <WeatherDisplay weather={actualWeather} />}
+          {actualWeather.main && <WeatherDisplay weather={actualWeather} />}
         </Left>
 
         <Right active={sidebarActive}>
@@ -101,22 +101,20 @@ export default function Home() {
               <li>
                 <span>Umidade do ar</span>
                 <span>
-                  {actualWeather.current && actualWeather.current.humidity}%
+                  {actualWeather.main && actualWeather.main.humidity}%
                 </span>
               </li>
               <li>
                 <span>Ventos</span>
                 <span>
-                  {actualWeather.current &&
-                    round(actualWeather.current.wind_kph)}
+                  {actualWeather.main && round(actualWeather.wind.speed)}
                   km/h
                 </span>
               </li>
               <li>
                 <span>Pressão atmosférica</span>
                 <span>
-                  {actualWeather.current &&
-                    round(actualWeather.current.pressure_mb)}
+                  {actualWeather.main && round(actualWeather.main.pressure)}
                   mb
                 </span>
               </li>

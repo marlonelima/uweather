@@ -1,9 +1,14 @@
 import axios from 'axios'
 
 export const WeatherService = {
-  async getByCityName(city: string) {
+  async getByCityName(location: string) {
     try {
-      return (await axios.get('/api/weather/getbycityname/' + city)).data
+      const response = await axios.get(
+        '/api/weather/getbylocation/' + location,
+        {}
+      )
+
+      return response.data
     } catch (err) {
       return false
     }
