@@ -2,11 +2,7 @@ import { api } from "./../config/api";
 export const WeatherService = {
   async getMyWeather({ coords }: GeolocationPosition) {
     try {
-      return (
-        await api.get(
-          "/getmyweather/" + `${coords.latitude},${coords.longitude}`
-        )
-      ).data;
+      return (await api.get("/weather/getbycityname/" + `porto_seguro`)).data;
     } catch (err) {
       return false;
     }
@@ -20,7 +16,7 @@ export const WeatherService = {
       .replace(" ", "_");
 
     try {
-      return (await api.get("/bycityname/" + cityFormatted)).data;
+      return (await api.get("/weather/getbycityname/" + cityFormatted)).data;
     } catch (err) {
       return false;
     }

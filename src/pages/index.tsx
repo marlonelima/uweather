@@ -76,7 +76,9 @@ export default function Home() {
             </Temperature>
             <Info>
               <span>
-                <h1>{actualWeather.location && actualWeather.location.name}</h1>
+                <p className="city">
+                  {actualWeather.location && actualWeather.location.name}
+                </p>
                 <p>
                   {actualWeather.location &&
                     epochToDate(actualWeather.location.localtime)}

@@ -1,4 +1,4 @@
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 import { darken } from "polished";
 
 interface ISidebar {
@@ -76,6 +76,7 @@ export const FeelsLike = styled.p`
 export const WeatherInfo = styled.div`
   display: inline-flex;
   align-items: center;
+  flex-wrap: wrap;
 
   p {
     align-self: flex-end;
@@ -98,7 +99,7 @@ export const Info = styled.div`
   margin-left: 25px;
   display: inline-flex;
 
-  h1 {
+  .city {
     font-size: 3rem;
     font-weight: 600;
   }
