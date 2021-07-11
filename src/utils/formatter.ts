@@ -1,36 +1,11 @@
+import { days, months } from "./daysandmonths";
+
 export function round(value: number) {
   return Math.round(value);
 }
 
-const days = [
-  "Domingo",
-  "Segunda",
-  "Terça",
-  "Quarta",
-  "Quinta",
-  "Sexta",
-  "Sábado",
-];
-
-const months = [
-  "Jan",
-  "Fev",
-  "Mar",
-  "Abr",
-  "Mai",
-  "Jun",
-  "Jun",
-  "Ago",
-  "Set",
-  "Out",
-  "Nov",
-  "Dez",
-];
-
-export function epochToDate(epoch: string) {
-  //const date = new Date(epoch * 1000);
-
-  const date = new Date(epoch);
+export function dateToShow(dateString: string) {
+  const date = new Date(dateString);
 
   const day = days[date.getDay()];
   const month = months[date.getMonth()];
@@ -38,12 +13,12 @@ export function epochToDate(epoch: string) {
 
   const hours = date.getHours();
   const minutes = date.getMinutes();
+
   return `${hours}:${minutes} - ${day}, ${month}, ${year} `;
 }
 
-export function stringToDate(dateString: string) {
-  //const date = new Date(epoch * 1000);
-
+export function getHour(dateString: string) {
   const date = new Date(dateString);
+
   return date.getHours();
 }

@@ -1,8 +1,8 @@
+import { useEffect, useState } from "react";
+
 import { Container, Image } from "../styles/components/backgroundimage";
 
-import sunny from "../assets/images/conditions/sunny.jpg";
-import { useEffect, useState } from "react";
-import { stringToDate } from "./../utils/formatter";
+import { getHour } from "./../utils/formatter";
 
 interface IProps {
   time: string;
@@ -17,8 +17,9 @@ const backgrounds = {
 
 export const BackgroundImage = ({ time }: IProps) => {
   const [background, setBackground] = useState(backgrounds.morning);
+
   useEffect(() => {
-    const hour = stringToDate(time);
+    const hour = getHour(time);
 
     if (hour >= 0 && hour < 5) return setBackground(backgrounds.night);
     if (hour >= 5 && hour < 12) return setBackground(backgrounds.morning);
@@ -26,6 +27,7 @@ export const BackgroundImage = ({ time }: IProps) => {
     if (hour >= 17 && hour < 19) return setBackground(backgrounds.sunny);
     if (hour >= 19) return setBackground(backgrounds.night);
   }, [background, time]);
+
   return (
     <Container>
       <Image src={background} alt="Background image" layout="fill" />

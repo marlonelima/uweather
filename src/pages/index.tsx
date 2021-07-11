@@ -1,3 +1,6 @@
+import { ChangeEvent, useEffect, useState } from "react";
+import Image from "next/image";
+
 import {
   Container,
   Content,
@@ -14,33 +17,22 @@ import {
   ToggleSidebar,
 } from "../styles/pages/home";
 
-import Image from "next/image";
+import { Left } from "../styles/pages/home";
+import { BackgroundImage } from "../components/BackgroundImage";
 
 import SearchIcon from "../assets/icons/search.svg";
 import ArrowIcon from "../assets/icons/arrow.svg";
 
-import { Left } from "../styles/pages/home";
-import { BackgroundImage } from "../components/BackgroundImage";
-import { ChangeEvent, useEffect, useState } from "react";
-
-import { IWeather } from "./../@types/interfaces.d";
-import { epochToDate, round } from "./../utils/formatter";
 import { WeatherService } from "../services/weather.service";
+import { dateToShow, round } from "./../utils/formatter";
+import { IWeather } from "./../@types/interfaces.d";
 
 export default function Home() {
   const [actualWeather, setActualWeather] = useState({} as IWeather);
   const [searchField, setSearchField] = useState("");
   const [sidebarActive, setSidebarActive] = useState(true);
 
-  useEffect(() => {
-    navigator.geolocation.getCurrentPosition(async (position) => {
-      const weatherInfo = await WeatherService.getMyWeather(position);
-
-      if (weatherInfo) return setActualWeather(weatherInfo);
-
-      return false;
-    });
-  }, []);
+  useEffect(() => {}, []);
 
   function handleInputChange(event: ChangeEvent<HTMLInputElement>) {
     setSearchField(event.target.value);
@@ -51,7 +43,7 @@ export default function Home() {
     const weatherInfo = await WeatherService.getByCityName(searchField);
     if (weatherInfo) return setActualWeather(weatherInfo);
 
-    return false;
+    return;
   }
 
   return (
@@ -65,37 +57,31 @@ export default function Home() {
         >
           <Image src={ArrowIcon} alt="Arrow" width={16} height={16} />
         </ToggleSidebar>
-        <Left>
-          <FeelsLike>
-            Sensação térmica{" "}
-            {actualWeather.current && round(actualWeather.current.feelslike_c)}°
-          </FeelsLike>
-          <WeatherInfo>
-            <Temperature>
-              {actualWeather.location && round(actualWeather.current.temp_c)}°
-            </Temperature>
-            <Info>
-              <span>
-                <p className="city">
-                  {actualWeather.location && actualWeather.location.name}
-                </p>
-                <p>
-                  {actualWeather.location &&
-                    epochToDate(actualWeather.location.localtime)}
-                </p>
-              </span>
-              <div>
-                {actualWeather.location && (
+
+        {actualWeather.location && (
+          <Left>
+            <FeelsLike>
+              Sensação térmica {round(actualWeather.current.feelslike_c)}°
+            </FeelsLike>
+            <WeatherInfo>
+              <Temperature>{round(actualWeather.current.temp_c)}°</Temperature>
+              <Info>
+                <span>
+                  <p className="city">{actualWeather.location.name}</p>
+                  <p>{dateToShow(actualWeather.location.localtime)}</p>
+                </span>
+                <div>
                   <Image
                     src={"https:" + actualWeather.current.condition.icon}
-                    alt=""
+                    alt="Weathr Icon"
                     layout="fill"
                   />
-                )}
-              </div>
-            </Info>
-          </WeatherInfo>
-        </Left>
+                </div>
+              </Info>
+            </WeatherInfo>
+          </Left>
+        )}
+
         <Right active={sidebarActive}>
           <SearchForm onSubmit={handleSubmit}>
             <SearchInput
@@ -107,6 +93,7 @@ export default function Home() {
               <Image src={SearchIcon} alt="Search" />
             </SearchButton>
           </SearchForm>
+
           <History>
             <ul>
               <li>Birmighan</li>
@@ -115,6 +102,7 @@ export default function Home() {
               <li>California</li>
             </ul>
           </History>
+
           <WeatherDetails>
             <p>Detalhes do clima</p>
             <ul>
