@@ -20,7 +20,6 @@ export function dateToShow(timeshift: number) {
 
 export function getHour(timeshift: number) {
   const date = formatToLocationTime(timeshift)
-  console.log(date.getHours())
   return date.getHours()
 }
 

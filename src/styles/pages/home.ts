@@ -63,7 +63,7 @@ export const Right = styled.div<ISidebar>`
 
   @media screen and (max-width: 700px) {
     width: 100%;
-    background: #2e2e2e;
+    background: #111;
     max-width: 100%;
   }
 `
@@ -198,5 +198,9 @@ export const ToggleSidebar = styled.button<ISidebar>`
   img {
     transition: 1s;
     transform: rotateY(${({ active }) => (active ? '180deg' : 0)});
+  }
+
+  @media screen and (max-width: 700px) {
+    display: none;
   }
 `
