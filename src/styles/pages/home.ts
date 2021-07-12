@@ -33,7 +33,7 @@ export const Left = styled.div`
   height: 100vh;
   display: flex;
   flex-direction: column;
-  padding: 60px;
+  padding: 2rem 3rem 3rem 3rem;
   justify-content: space-between;
 
   @media screen and (max-width: 1000px) {
@@ -42,6 +42,8 @@ export const Left = styled.div`
 
   @media screen and (max-width: 700px) {
     width: 100%;
+    height: 90vh;
+    padding-bottom: 80px;
   }
 `
 
@@ -78,7 +80,6 @@ export const SearchForm = styled.form`
 
 export const SearchInput = styled.input`
   color: #fff;
-  margin-top: 80px;
   margin-right: 20px;
   flex: 1;
   height: 40px;
@@ -96,26 +97,29 @@ export const SearchInput = styled.input`
 `
 
 export const SearchButton = styled.button`
-  width: 150px;
-  height: 120px;
+  width: 10rem;
+  height: 7.5rem;
   background: #e06004;
   color: #fff;
   transition: 0.3s;
-  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
   :hover {
     cursor: pointer;
     background: ${darken(0.1, '#e06004')};
   }
 
-  @media screen and (max-width: 1000px) {
-    width: 50px;
-    height: 50px;
+  img {
+    width: 2rem;
+    height: 2rem;
+    align-self: center;
+  }
 
-    img {
-      width: 50%;
-      height: 50%;
-    }
+  @media screen and (max-width: 1000px) {
+    width: 7rem;
+    height: 6rem;
   }
 `
 
@@ -129,8 +133,14 @@ export const History = styled.div`
     display: block;
   }
 
-  ul li {
-    color: #bababa;
+  ul li button {
+    color: #e8e8e8;
+    font-size: 0.95rem;
+  }
+
+  ul li button:hover {
+    filter: brightness(0.9);
+    cursor: pointer;
   }
 
   ul li:not(:last-child) {

@@ -20,6 +20,7 @@ export const Temperature = styled.p`
   font-weight: 600;
   letter-spacing: -7px;
   color: #fff;
+  margin-right: 25px;
 
   @media screen and (max-width: 1000px) {
     font-size: 5rem;
@@ -28,7 +29,6 @@ export const Temperature = styled.p`
 
 export const Info = styled.div`
   color: #fff;
-  margin-left: 25px;
   display: inline-flex;
 
   .city {

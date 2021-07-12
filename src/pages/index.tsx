@@ -1,5 +1,7 @@
 import { ChangeEvent, useEffect, useState } from 'react'
 import Image from 'next/image'
+import Head from 'next/head'
+
 import axios from 'axios'
 
 import {
@@ -19,6 +21,7 @@ import { BackgroundImage } from '../components/BackgroundImage'
 
 import SearchIcon from '../assets/icons/search.svg'
 import ArrowIcon from '../assets/icons/arrow.svg'
+import LoadingSpinner from '../assets/spinner.gif'
 
 import { WeatherService } from '../services/weather.service'
 import { round } from './../utils/formatter'
@@ -53,6 +56,7 @@ export default function Home({ weather }: IProps) {
   const [actualWeather, setActualWeather] = useState(weather)
   const [searchField, setSearchField] = useState('')
   const [sidebarActive, setSidebarActive] = useState(true)
+  const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
     getMyWeather()
@@ -60,14 +64,12 @@ export default function Home({ weather }: IProps) {
 
   async function getMyWeather() {
     const { city } = await PositionService.getMyCity()
-
     if (!city) return
 
     const myWeather = await WeatherService.getByCityName(city)
-
     if (!myWeather) return
 
-    return setActualWeather(myWeather)
+    return setActualWeather(myWeather), setIsLoading(false)
   }
 
   function handleInputChange(event: ChangeEvent<HTMLInputElement>) {
@@ -75,15 +77,26 @@ export default function Home({ weather }: IProps) {
   }
 
   async function handleSubmit(event: ChangeEvent<HTMLFormElement>) {
-    event.preventDefault()
+    event.preventDefault(), setIsLoading(true)
     const weatherInfo = await WeatherService.getByCityName(searchField)
-    if (weatherInfo) return setActualWeather(weatherInfo)
+    if (!weatherInfo) return
 
-    return
+    return setActualWeather(weatherInfo), setIsLoading(false)
+  }
+
+  async function handlePresetClick(city: string) {
+    setIsLoading(true)
+    const myWeather = await WeatherService.getByCityName(city)
+    if (!myWeather) return
+
+    return setActualWeather(myWeather), setIsLoading(false)
   }
 
   return (
     <Container>
+      <Head>
+        <title>UWeather</title>
+      </Head>
       <BackgroundImage time={actualWeather.timezone} />
 
       <Content>
@@ -106,16 +119,42 @@ export default function Home({ weather }: IProps) {
               placeholder="Another location"
             />
             <SearchButton>
-              <Image src={SearchIcon} alt="Search" />
+              <Image
+                src={isLoading ? LoadingSpinner : SearchIcon}
+                alt="Search"
+                layout="intrinsic"
+              />
             </SearchButton>
           </SearchForm>
 
           <History>
             <ul>
-              <li>Birmighan</li>
-              <li>Manchester</li>
-              <li>New York</li>
-              <li>California</li>
+              <li>
+                <button onClick={() => handlePresetClick('Tóquio, Japão')}>
+                  Tóquio
+                </button>
+              </li>
+              <li>
+                <button
+                  onClick={() => handlePresetClick('Manchester, Inglattera')}
+                >
+                  Manchester
+                </button>
+              </li>
+              <li>
+                <button
+                  onClick={() => handlePresetClick('Los Angeles, Califórnia')}
+                >
+                  Los Angeles
+                </button>
+              </li>
+              <li>
+                <button
+                  onClick={() => handlePresetClick('São Petersburgo, Rússia')}
+                >
+                  São Petersburgo
+                </button>
+              </li>
             </ul>
           </History>
 

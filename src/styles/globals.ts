@@ -24,4 +24,10 @@ export const GlobalStyles = createGlobalStyle`
     ul{ 
         list-style: none; 
     }
+
+    @media screen and (max-width: 1366px){
+        html{
+            font-size: 13px;
+        }
+    }
 `

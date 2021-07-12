@@ -17,20 +17,23 @@ interface IProps {
 export const WeatherDisplay = ({ weather }: IProps) => {
   return (
     <>
-      <FeelsLike>Sensação térmica {round(weather.main.feels_like)}°</FeelsLike>
+      <FeelsLike>
+        Sensação térmica {round(weather.main.feels_like)}° |{' '}
+        {weather.weather[0].description}
+      </FeelsLike>
       <WeatherInfo>
-        <Temperature>{round(weather.main.temp)}°</Temperature>
+        <Temperature>{round(weather.main.temp)}° </Temperature>
         <Info>
           <span>
             <p className="city">{weather.name}</p>
             <p>{dateToShow(weather.timezone)}</p>
           </span>
           <div>
-            {/* <Image
+            <Image
               alt="Weathr Icon"
-              src={'https:' + weather.current.condition.icon}
+              src={`http://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`}
               layout="fill"
-            /> */}
+            />
           </div>
         </Info>
       </WeatherInfo>
